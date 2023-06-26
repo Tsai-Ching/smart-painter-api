@@ -1,7 +1,7 @@
 const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const knex = require('knex');
 
@@ -45,10 +45,10 @@ app.get('/', (req, res) => {
 })
 
 //確認前端的request與database中使用者的密碼相符
-app.post('/signin', (req, res) => {signin.handleSignin(req, res, db, bcrypt)});
+app.post('/signin', (req, res) => {signin.handleSignin(req, res, db, bcryptjs)});
 
 //把註冊的使用者資訊加入database
-app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)});
+app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcryptjs)});
 
 //在使用主頁中return使用者資訊
 app.get('/profile/:id', (req, res) => {profile.handleProfile(req, res, db)});
