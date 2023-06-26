@@ -41,7 +41,7 @@ const database = {
 }
 
 app.get('/', (req, res) => {
-	res.send(database.users);
+	res.send('it is working!');
 })
 
 //確認前端的request與database中使用者的密碼相符
