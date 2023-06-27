@@ -39,6 +39,7 @@ const handleImage = (req, res, db) => {
 		.increment('entries', 1)
 		.returning('entries')
 		.then(data => {
+			console.log(data)
 			res.json(data[0].entries)
 		})
 		.catch(err => res.status(400).json('error getting entries'))
