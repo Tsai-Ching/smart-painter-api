@@ -13,11 +13,11 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
+    host : process.env.DATABASE_URL,
     port : 5432,
-    user : 'Emma',
-    password : '',
-    database : 'smart-painter-db'
+    user : 'emmahsu',
+    password : '8bBnoGpb4deK9kU4Dale55Gp59QcDwK1',
+    database : 'db_j9vw'
   }
 });
 
@@ -26,19 +26,6 @@ const app = express();
 app.use(cors())
 
 app.use(bodyParser.json());
-
-const database = {
-	users: [
-		{
-			id: '123',
-			name: 'John',
-			email: 'john@gmail.com',
-			password: '123',
-			entries: 0,
-			joined: new Date()
-		}
-	]
-}
 
 app.get('/', (req, res) => {
 	res.send('it is working!');
