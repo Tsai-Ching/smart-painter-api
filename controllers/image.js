@@ -10,7 +10,7 @@ const handleApiCall = (req, res) => {
           {
               "data": {
                   "text": {
-                      "raw": 'a Vincent Van Gogh style paint of' + req.body.input
+                      "raw": 'a Vincent Van Gogh style paint of' + req.body.inputText
                   }
               }
           }
