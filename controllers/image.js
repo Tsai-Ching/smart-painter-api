@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+
 
 const handleApiCall = (req, res) => {
 	const raw = JSON.stringify({
@@ -27,7 +27,6 @@ const handleApiCall = (req, res) => {
 	fetch(`https://api.clarifai.com/v2/models/general-image-generator-dalle-mini/versions/86c0ae39083e45a8bf96fde91f4e1952/outputs`, requestOptions)
 	.then(data => data.json())
 	.then(data => {
-		console.log(data)
 		res.json(data);
 	})
 	.catch(err => res.status(400).json('unable to work with API'))
