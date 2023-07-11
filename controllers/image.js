@@ -1,36 +1,31 @@
 const fetch = require("node-fetch");
+const {Configuration, OpenAIApi} = require("openai");
+
 
 const handleApiCall = (req, res) => {
-	const raw = JSON.stringify({
-      "user_app_id": {
-        "user_id": "borisdayma",
-        "app_id": "generative-art"
-      },
-      "inputs": [
-          {
-              "data": {
-                  "text": {
-                      "raw": 'a Vincent Van Gogh style paint of' + req.body.inputText
-                  }
-              }
-          }
-      ]
-    });
-	const requestOptions = {
-	    method: 'POST',
-	    headers: {
-	        'Accept': 'application/json',
-	        'Authorization': 'Key ' + '7307a83a63294f25b1a4569ecf26d727'
-	    },
-	    body: raw
-	};
-	fetch(`https://api.clarifai.com/v2/models/general-image-generator-dalle-mini/versions/86c0ae39083e45a8bf96fde91f4e1952/outputs`, requestOptions)
-	.then(data => data.json())
-	.then(data => {
-		res.json(data);
-	})
-	.catch(err => res.status(400).json('unable to work with API'))
+	const configuration = new Configuration({
+		organization: "org-JmXBPuadpIdZyXuR8FmOqYFf",
+		apiKey: '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',
+	});
+
+	const openai = new OpenAIApi(configuration);
+	
+	const predict = async function getUrl() {
+		const response = await openai.createImage({
+			prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
+			n: 1,
+			size: "256x256",
+		  });
+		const image_url = response.data.data[0].url;
+  		return(image_url);
+	}
+	predict()
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => res.status(400).json('unable to work with API'))
 }
+
 const handleImage = (req, res, db) => {
 	const { id } = req.body;
 
@@ -39,7 +34,6 @@ const handleImage = (req, res, db) => {
 		.increment('entries', 1)
 		.returning('entries')
 		.then(data => {
-			console.log(data)
 			res.json(data[0].entries)
 		})
 		.catch(err => res.status(400).json('error getting entries'))
