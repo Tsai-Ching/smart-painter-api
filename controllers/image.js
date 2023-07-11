@@ -5,7 +5,7 @@ const {Configuration, OpenAIApi} = require("openai");
 const handleApiCall = (req, res) => {
 	const configuration = new Configuration({
 		organization: "org-JmXBPuadpIdZyXuR8FmOqYFf",
-		apiKey: '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',
+		apiKey: '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',
 	});
 
 	const openai = new OpenAIApi(configuration);
@@ -23,7 +23,7 @@ const handleApiCall = (req, res) => {
 		.then(data => {
 			res.json(data);
 		})
-		.catch(err => res.status(400).json('unable to work with API'))
+		.catch(err => res.status(400).json(err))
 }
 
 const handleImage = (req, res, db) => {
