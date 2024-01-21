@@ -10,6 +10,10 @@ const handleRegister = (req, res, db, bcrypt) => {
 	}
 
 	bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+		if (err) {
+			// 處理 bcrypt.hash 的錯誤
+			res.status(400).json('unable to register');
+		} else {
 			db.transaction(function(trx) {
 			  return trx.insert({email: email, hash: hash})
 			    .into('login')
@@ -30,6 +34,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 			    .then(trx.commit)
 			    .catch(trx.rollback);
 			})
+		}
 	});
 }
 
