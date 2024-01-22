@@ -1,7 +1,5 @@
 const fetch = require("node-fetch");
-const {Configuration, OpenAIApi} = require("openai");
-import OpenAI from "openai";
-
+const {Configuration, OpenAIApi, OpenAI} = require("openai");
 
 const handleApiCall = (req, res) => {
 	const openai = new OpenAI();
