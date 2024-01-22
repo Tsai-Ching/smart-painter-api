@@ -9,21 +9,56 @@ const handleApiCall = (req, res) => {
 	});
 
 	const openai = new OpenAIApi(configuration);
-	
-	const predict = async function getUrl() {
-		const response = await openai.createImage({
-			prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
-			n: 1,
-			size: "512x512",
-		  });
-		const image_url = response.data.data[0].url;
-  		return(image_url);
-	}
-	predict()
-		.then(data => {
-			res.json(data);
+	const apiUrl = 'https://api.example.com/dalle-2';
+	const apiKey = process.env.OPENAI_API_KEY;
+	const prompt = 'a Vincent Van Gogh style paint of' + req.body.inputText
+
+	// const predict = async function getUrl() {
+	// 	const response = await openai.createImage({
+	// 		model: "dall-e-3",
+	// 		prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
+	// 		n: 1,
+	// 		size: "512x512",
+	// 	  });
+	// 	const image_url = response.data.data[0].url;
+	// 	console.log(image_url)
+  	// 	return(image_url);
+	// }
+	// predict()
+	// 	.then(data => {
+	// 		res.json(data);
+	// 	})
+	// 	.catch(err => res.status(400).json(err))
+	const requestOptions = {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		  'Authorization': `Bearer ${apiKey}`,
+		},
+		body: JSON.stringify({
+		  model: "dall-e-2",
+		  prompt: prompt,  // 使用您的實際輸入文字
+		  n: 1,
+		  size: "512x512",
+		}),
+	  };
+	  
+	  fetch(apiUrl, requestOptions)
+		.then(response => {
+		  if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		  }
+		  return response.json();
 		})
-		.catch(err => res.status(400).json(err))
+		.then(response => {
+		  // 處理 API 回應
+		  const image_url = response.data.data[0].url;
+		  return(image_url);
+		})
+		.then(data => {
+		  res.json(data);
+		})
+		.catch(err => res.status(400).json(err));
 }
 
 const handleImage = (req, res, db) => {
