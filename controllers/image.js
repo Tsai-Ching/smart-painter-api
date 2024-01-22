@@ -1,19 +1,18 @@
 const fetch = require("node-fetch");
-const {Configuration, OpenAIApi} = require("openai");
+const {Configuration, OpenAIApi, OpenAI} = require("openai");
 
 
 const handleApiCall = (req, res) => {
-	const fs = require('fs');
 	const key = process.env.OPENAI_API_KEY;
 	const configuration = new Configuration({
 		organization: "org-JmXBPuadpIdZyXuR8FmOqYFf",
 		apiKey: key,
 	});
 
-	const openai = new OpenAIApi(configuration);
+	const openai = new OpenAI()(configuration);
 	
 	const predict = async function getUrl() {
-		const response = await openai.createImage({
+		const response = await openai.images.generate({
 			prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
 			n: 1,
 			size: "512x512",
