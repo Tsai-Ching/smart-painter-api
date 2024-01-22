@@ -19,6 +19,7 @@ const db = knex({
     user: 'smart_brain_a7nt_user',
     password: 'NTWi6BLMA1ZF8CVFo7N8Nzw3pgEeVz3Q',
     database: 'smart_brain_a7nt',
+    ssl: true
   },
 });
 
