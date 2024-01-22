@@ -1,25 +1,37 @@
 const fetch = require("node-fetch");
 const {Configuration, OpenAIApi} = require("openai");
+import OpenAI from "openai";
 
 
 const handleApiCall = (req, res) => {
-	const configuration = new Configuration({
-		organization: "org-JmXBPuadpIdZyXuR8FmOqYFf",
-		apiKey: process.env.OPENAI_API_KEY,
-	});
-
-	const openai = new OpenAIApi(configuration);
-	
-	const predict = async function getUrl() {
-		const response = await openai.createImage({
+	const openai = new OpenAI();
+	async function predict() {
+		const image = await openai.images.generate({ 
+			model: "dall-e-2", 
 			prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
 			n: 1,
-			size: "512x512",
-		  });
+	 		size: "512x512",
+		});
+	  
 		const image_url = response.data.data[0].url;
-		console.log(image_url)
-  		return(image_url);
-	}
+  	 	return(image_url);
+	  }
+	// const configuration = new Configuration({
+	// 	organization: "org-JmXBPuadpIdZyXuR8FmOqYFf",
+	// 	apiKey: process.env.OPENAI_API_KEY,
+	// });
+
+	// const openai = new OpenAIApi(configuration);
+	
+	// const predict = async function getUrl() {
+	// 	const response = await openai.createImage({
+	// 		prompt: 'a Vincent Van Gogh style paint of' + req.body.inputText,
+	// 		n: 1,
+	// 		size: "512x512",
+	// 	  });
+	// 	const image_url = response.data.data[0].url;
+  	// 	return(image_url);
+	// }
 	predict()
 		.then(data => {
 			res.json(data);
