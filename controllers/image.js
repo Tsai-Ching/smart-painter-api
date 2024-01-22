@@ -9,7 +9,7 @@ const handleApiCall = (req, res) => {
 		apiKey: key,
 	});
 
-	const openai = new OpenAI()();
+	const openai = new OpenAI();
 	
 	const predict = async function getUrl() {
 		const response = await openai.images.generate({
