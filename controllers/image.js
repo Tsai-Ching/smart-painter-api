@@ -17,6 +17,7 @@ const handleApiCall = (req, res) => {
 			size: "512x512",
 		  });
 		const image_url = response.data.data[0].url;
+		console.log(image_url)
   		return(image_url);
 	}
 	predict()
