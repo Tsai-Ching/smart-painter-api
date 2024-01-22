@@ -9,7 +9,7 @@ const handleApiCall = (req, res) => {
 	});
 
 	const openai = new OpenAIApi(configuration);
-	const apiUrl = 'https://api.example.com/dalle-2';
+	const apiUrl = 'https://api.openai.com/v1/models';
 	const apiKey = process.env.OPENAI_API_KEY;
 	const prompt = 'a Vincent Van Gogh style paint of' + req.body.inputText
 
